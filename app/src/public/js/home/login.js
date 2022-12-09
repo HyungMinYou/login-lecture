@@ -16,5 +16,13 @@ function login() {
     id: id.value, //login버튼이 클릭되면 id와 psword에 들어있는 값을 가져와야 한다
     psword: psword.value,
   };
-  console.log(req);
+  fetch("/login", {
+    method: "POST", //body를 통해서 데이터를 전달할 때는 POST를 이용해서 데이터를 전달해야함
+    headers: {
+      "Content-Type": "application/json",
+    }, //내가 전달하는 데이터가 json데이터라고 알려줘야하는데 그것을 headers로 표현
+    body: JSON.stringify(req), //stringify는 object를 문자열로 바꿔줌
+  });
+  //서버랑 프론트랑 해당 데이터를 어떤 경로에서 주고 받을지를 API설정
+  //프론트에서 전달하는 과정
 }
