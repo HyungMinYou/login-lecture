@@ -21,8 +21,9 @@ class UserStorage {
     return userInfo; // 10.그렇게해서 userInfo라는게 만들어짐
   }
 
-  static getUsers(...fields) {
-    // const users = this.#users;
+  static #getUsers(data, isAll, fields) {
+    const users = JSON.parse(data); //버퍼로 되있는 데이터를 파싱해서 받을 수 있는 데이터로 바뀐것을 users로 넣어줌
+    if (isAll) return users; // 모든 값을 다 가져오겠다 라는 의미
     const newUsers = fields.reduce((newUsers, field) => {
       if (users.hasOwnProperty(field)) {
         newUsers[field] = users[field];
@@ -32,8 +33,16 @@ class UserStorage {
     return newUsers; //class안에 은닉화된 private변수 #users를 반환해줌
   }
 
+  static getUsers(isAll, ...fields) {
+    return fs
+      .readFile("./src/databases/users.json")
+      .then((data) => {
+        return this.#getUsers(data, isAll, fields);
+      })
+      .catch(console.error); //해당 로직이 실패했을 때 실행
+  }
+
   static getUserInfo(id) {
-    // 1.맨위 users 객체를 변수 users로 받아왔고
     return fs
       .readFile("./src/databases/users.json")
       .then((data) => {
@@ -43,11 +52,16 @@ class UserStorage {
   }
 
   // 클라이언트에서 데이터를 전달하면 users객체안에 해당 데이터들이 저장
-  static save(userInfo) {
-    // const users = this.#users;
+  static async save(userInfo) {
+    const users = await this.getUsers(true); //데이터를 object형태로 반환해서 users가 가지고 있을거임
+    if (users.id.includes(userInfo.id)) {
+      //users안에 이미 id가 존재하면
+      throw "이미 존재하는 아이디입니다.";
+    }
     users.id.push(userInfo.id);
     users.name.push(userInfo.name);
     users.psword.push(userInfo.psword);
+    fs.writeFile("./src/databases/users.json", JSON.stringify(users)); //추가한 users데이터를 users에 넣어줘야 함
     return { success: true };
   }
 }

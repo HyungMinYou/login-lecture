@@ -22,9 +22,9 @@ const process = {
     const response = await user.login();
     return res.json(response); // json객체로 만들어서 클라이언트에 던져줌
   },
-  register: (req, res) => {
+  register: async (req, res) => {
     const user = new User(req.body); // 이 body가 User.js폴더에 있는 User클래스 생성자의 body로 들어감
-    const response = user.register();
+    const response = await user.register();
     return res.json(response);
   },
 };
