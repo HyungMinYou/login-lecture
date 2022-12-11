@@ -25,7 +25,17 @@ function login() {
     body: JSON.stringify(req), //stringify는 object를 문자열로 바꿔줌
   })
     .then((res) => res.json())
-    .then(console.log); //response를 받아서 response를 콘솔로그에 파라미터로 전달을 해준다는 것
+    .then((res) => {
+      if (res.success) {
+        location.href = "/";
+      } else {
+        alert(res.msg);
+      }
+    })
+    // fetch를 수행하다가 에러를 처리하는 방법
+    .catch((err) => {
+      console.error("로그인 중 에러 발생");
+    });
   //서버랑 프론트랑 해당 데이터를 어떤 경로에서 주고 받을지를 API설정
   //프론트에서 전달하는 과정(데이터가 서버로 전달이 되게 됨)
 }
