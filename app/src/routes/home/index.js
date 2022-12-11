@@ -11,8 +11,10 @@ router.get("/", ctrl.output.home);
 
 router.get("/login", ctrl.output.login);
 router.get("/register", ctrl.output.register);
+
 router.post("/login", ctrl.process.login);
 // 해당 API는 프론트엔드가 전달한 로그인데이터를 받아서 로그인 기능을 처리해주는 것
 // process는 처리한다는 의미
+router.post("/register", ctrl.process.register);
 
 module.exports = router; // 라우터와 app.js를 연결하기 위해 외부로 내보내는 코드

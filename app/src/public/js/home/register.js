@@ -14,11 +14,14 @@ registerBtn.addEventListener("click", register);
 //register버튼이 눌리면 click이라는 이벤트가 발생하면 로그인을 시켜줌
 
 function register() {
+  if (!id.value) return alert("아이디를 입력해주십시오.");
+  if (psword.value !== confirmPsword.value)
+    return alert("비밀번호가 일치하지 않습니다.");
+
   const req = {
     id: id.value, //register버튼이 클릭되면 id와 psword에 들어있는 값을 가져와야 한다
     name: name.value,
     psword: psword.value,
-    confirmPsword: confirmPsword.value,
   };
 
   fetch("/register", {
@@ -30,9 +33,10 @@ function register() {
     //SIGN UP버튼이 눌리면 회원가입에 해당하는 데이터들을 body에 담아서 전달할거니까 POST로 요청
   })
     .then((res) => res.json())
+    //서버로부터 응답이 오면 json메서드를 호출해서 서버에 응답이 다 받아지는 순간 프로미스객체를 반환
     .then((res) => {
       if (res.success) {
-        location.href = "/";
+        location.href = "/login";
       } else {
         alert(res.msg);
       }

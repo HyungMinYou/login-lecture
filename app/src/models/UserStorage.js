@@ -37,6 +37,15 @@ class UserStorage {
 
     return userInfo; // 10.그렇게해서 userInfo라는게 만들어짐
   }
+
+  // 클라이언트에서 데이터를 전달하면 users객체안에 해당 데이터들이 저장
+  static save(userInfo) {
+    const users = this.#users;
+    users.id.push(userInfo.id);
+    users.name.push(userInfo.name);
+    users.psword.push(userInfo.psword);
+    return { success: true };
+  }
 }
 //메서드를 전달해주어야 함
 
