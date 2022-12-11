@@ -5,24 +5,29 @@
 
 //id 텍스트에 존재하는 값은 자바스크립트에서 id라는 변수로 담음
 const id = document.querySelector("#id"),
+  name = document.querySelector("#name"),
   psword = document.querySelector("#psword"),
-  loginBtn = document.querySelector("#button");
+  confirmPsword = document.querySelector("#confirm-psword"),
+  registerBtn = document.querySelector("#button");
 
-loginBtn.addEventListener("click", login);
-//login버튼이 눌리면 click이라는 이벤트가 발생하면 로그인을 시켜줌
+registerBtn.addEventListener("click", register);
+//register버튼이 눌리면 click이라는 이벤트가 발생하면 로그인을 시켜줌
 
-function login() {
+function register() {
   const req = {
-    id: id.value, //login버튼이 클릭되면 id와 psword에 들어있는 값을 가져와야 한다
+    id: id.value, //register버튼이 클릭되면 id와 psword에 들어있는 값을 가져와야 한다
+    name: name.value,
     psword: psword.value,
+    confirmPsword: confirmPsword.value,
   };
 
-  fetch("/login", {
+  fetch("/register", {
     method: "POST", //body를 통해서 데이터를 전달할 때는 POST를 이용해서 데이터를 전달해야함
     headers: {
       "Content-Type": "application/json",
     }, //내가 전달하는 데이터가 json데이터라고 알려줘야하는데 그것을 headers로 표현
-    body: JSON.stringify(req), //stringify는 object를 문자열로 바꿔줌
+    body: JSON.stringify(req),
+    //SIGN UP버튼이 눌리면 회원가입에 해당하는 데이터들을 body에 담아서 전달할거니까 POST로 요청
   })
     .then((res) => res.json())
     .then((res) => {
@@ -34,7 +39,7 @@ function login() {
     })
     // fetch를 수행하다가 에러를 처리하는 방법
     .catch((err) => {
-      console.error("로그인 중 에러 발생");
+      console.error("회원가입 중 에러 발생");
     });
   //서버랑 프론트랑 해당 데이터를 어떤 경로에서 주고 받을지를 API설정
   //프론트에서 전달하는 과정(데이터가 서버로 전달이 되게 됨)
