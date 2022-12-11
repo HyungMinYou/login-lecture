@@ -8,10 +8,12 @@ class User {
     this.body = body;
   }
 
-  login() {
+  async login() {
+    //await은 async(비동기)함수 안에서만 사용할 수 있음
     const client = this.body;
     //이 user.login은 컨트롤러에서 호출을 했으니까 실행이 됨
-    const { id, psword } = UserStorage.getUserInfo(client.id);
+    const { id, psword } = await UserStorage.getUserInfo(client.id);
+    // getUserInfo라는 메서드가 시간이 오래걸려서 다 수행될때까지 기다리라고 함
 
     if (id) {
       if (id === client.id && psword === client.psword) {
