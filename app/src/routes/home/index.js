@@ -10,6 +10,7 @@ router.get("/", ctrl.output.home);
 // 브라우저한테 요청과 응답을 받기 위해서 req,res
 
 router.get("/login", ctrl.output.login);
+router.get("/register", ctrl.output.register);
 router.post("/login", ctrl.process.login);
 // 해당 API는 프론트엔드가 전달한 로그인데이터를 받아서 로그인 기능을 처리해주는 것
 // process는 처리한다는 의미
