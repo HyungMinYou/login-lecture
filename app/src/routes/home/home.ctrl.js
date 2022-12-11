@@ -1,6 +1,6 @@
 "use strict";
 
-const UserStorage = require("../../models/UserStorage");
+const User = require("../../models/User");
 
 const output = {
   home: (req, res) => {
@@ -14,23 +14,9 @@ const output = {
 
 const process = {
   login: (req, res) => {
-    const id = req.body.id,
-      psword = req.body.psword;
-
-    const users = UserStorage.getUsers("id", "psword"); //UserStorage의 class안 user변수에 접근을 할 수 있음
-
-    const response = {};
-    if (users.id.includes(id)) {
-      const idx = users.id.indexOf(id);
-      if (users.psword[idx] === psword) {
-        response.success = true;
-        return res.json(response);
-      }
-    } //req는 프론트엔드에서 전달한 요청 데이터들을 담아두는 변수
-
-    response.success = false;
-    response.msg = "로그인에 실패하셨습니다.";
-    return res.json(response);
+    const user = new User(req.body); // 이 body가 User.js폴더에 있는 User클래스 생성자의 body로 들어감
+    const response = user.login();
+    return res.json(response); // json객체로 만들어서 클라이언트에 던져줌
   },
 };
 
