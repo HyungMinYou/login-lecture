@@ -3,6 +3,10 @@
 //모듈
 const express = require("express");
 const bodyParser = require("body-Parser");
+const dotenv = require("dotenv");
+dotenv.config();
+// dotenv 모듈을 사용하면 어떤 os에서 개발을 하더라도 다 동일하게 환경변수를 등록하고 가져올수있게 됨
+
 const app = express();
 
 //라우팅
